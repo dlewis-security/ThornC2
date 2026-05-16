@@ -1,0 +1,6 @@
+[submodule "tools/donut"]
+	path = tools/donut
+	url = https://github.com/TheWover/donut
+[submodule "tools/lnk-it-up"]
+	path = tools/lnk-it-up
+	url = https://github.com/Wietze/lnk-it-up

@@ -1,0 +1,12 @@
+[build]
+target = "x86_64-pc-windows-gnu"
+
+[target.x86_64-pc-windows-gnu]
+rustflags = [
+    "-C", "relocation-model=pic",   # RIP-relative only — no absolute refs
+    "-C", "no-redzone=yes",         # shellcode has no red-zone guarantee
+    "-C", "code-model=small",       # all refs within ±2 GB via rel32
+    "-C", "link-arg=-nostartfiles",
+    "-C", "link-arg=-eloader_entry",
+    "-C", "link-arg=-Wl,--image-base=0x10000000",
+]

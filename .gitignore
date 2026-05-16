@@ -1,0 +1,63 @@
+notes.txt
+*.nessus
+*.xml
+db/*.db
+node_modules/
+package-lock.json
+*test.js
+test.txt
+*.csv
+*.zip
+.env
+.claude/
+reports/*
+
+# compiled artifacts
+backdoors/
+builder/backdoors/
+builder/src/implant/target/
+builder/src/stager/target/
+loader/target/
+tools/coff_loader/target/
+builder/bab/__pycache__/
+builder/__pycache__/
+
+# python cache / virtualenvs
+__pycache__/
+*.pyc
+.thorn/
+.venv/
+venv/
+
+# sqlite db (runtime state, not source)
+nest.db
+
+# per-operator build config (personal keys, URLs, filenames — copy from build_config.example.json)
+builder/build_config.json
+
+# secrets / keys / certs
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa*
+*.kdbx
+
+# compiled binaries / payloads
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+!tools/thornldr_stub.bin
+!tools/coff_loader_stub.bin
+*.obj
+*.o
+
+# third-party tools (operator-supplied, not distributed)
+code_snippets/tools/
+
+# personal / local
+notes/
+.DS_Store

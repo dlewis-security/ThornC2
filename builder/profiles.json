@@ -1,0 +1,41 @@
+{
+  "profiles": [
+    {
+      "id": "baseline",
+      "name": "Baseline",
+      "description": "Minimal example profile. Direct-exec stager with ETW patching and sandbox checks.",
+      "config": {
+        "component_evasion": "etw_patch,anti_sandbox_hammer,self_delete",
+        "component_execution": "os_shell",
+        "component_stager": "direct_exec",
+        "component_stager_crypto": "aes_256_cbc",
+        "loader_features": []
+      }
+    },
+    {
+      "id": "stealth",
+      "name": "Stealth",
+      "description": "PPID-spoofed stager with NTDLL unhook, ETW patching, and sandbox checks. Section-mapped shellcode placement avoids cross-process writes.",
+      "config": {
+        "component_evasion": "anti_sandbox_hammer,ntdll_unhook,etw_patch,self_delete",
+        "component_execution": "os_shell",
+        "component_stager": "ppid_spoof",
+        "component_stager_inject": "section_map",
+        "component_stager_crypto": "aes_256_cbc",
+        "loader_features": []
+      }
+    },
+    {
+      "id": "advanced",
+      "name": "Advanced",
+      "description": "Dynamic process selection with full evasion stack and PowerShell CLR execution. AMSI hardware-breakpoint bypass, NTDLL unhook, anti-debug, DLL load policy.",
+      "config": {
+        "component_evasion": "anti_sandbox_hammer,ntdll_unhook,etw_patch,amsi_hwbp,anti_debug,block_dll_policy,self_delete",
+        "component_execution": "powershell_clr",
+        "component_stager": "dynamic_inject",
+        "component_stager_crypto": "aes_256_cbc",
+        "loader_features": []
+      }
+    }
+  ]
+}
