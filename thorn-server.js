@@ -403,14 +403,17 @@ const load_stager_components = async () => {
   let stager_components_payload_types = fs.readdirSync(stager_components_dir)
   for (const payload_type of stager_components_payload_types) {
     let payload_type_dir = path.join(stager_components_dir, payload_type)
+    if (!fs.statSync(payload_type_dir).isDirectory()) continue
     //list subfolders in the payload type folder
     let stager_file_types = fs.readdirSync(payload_type_dir)
     for (const stager_file_type of stager_file_types) {
       let stager_file_type_dir = path.join(payload_type_dir, stager_file_type)
+      if (!fs.statSync(stager_file_type_dir).isDirectory()) continue
       //list subfolders in the stager file type folder
       let stager_components = fs.readdirSync(stager_file_type_dir)
       for (const stager_component of stager_components) {
-        let stager_component_dir = path.join(stager_file_type_dir, stager_component)  
+        let stager_component_dir = path.join(stager_file_type_dir, stager_component)
+        if (!fs.statSync(stager_component_dir).isDirectory()) continue
         //import the stager component manifest
         let manifest_path = path.join(stager_component_dir, 'manifest.js')
         console.log(`${manifest_path}`)
